@@ -15,7 +15,7 @@ public class NumberReceiver extends BroadcastReceiver {
         Integer counterValue = arg1.getIntExtra("CounterValue", 0 );
         Log.d("Broadcast receiver", "Hey, " + name + ", counter value for you is " + counterValue.toString());
         Thread thread = new Thread(() -> {
-            AppDatabase db = Room.databaseBuilder(arg0, AppDatabase.class, "databasemojaaa.sql").build();
+            AppDatabase db = Room.databaseBuilder(arg0, AppDatabase.class, "counterDatabase.sql").build();
             try {
                 CounterDao counterDao = db.counterDao();
                 Counter counter2 = new Counter();

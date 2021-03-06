@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.widget.TextView;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
-
     private AppDatabase db;
     private CounterDao userDao;
     private NumberReceiver broadcast = new NumberReceiver();
@@ -34,24 +35,26 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         registerReceiver(broadcast, filter);
         setContentView(R.layout.activity_user);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "databasemojaaa.sql").build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "counterDatabase.sql").build();
         userDao = db.counterDao();
-        // Get the Intent that started this activity and extract the string
+
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.textView);
         textView.setText(message);
     }
 
-    public void StartCounter(View view) {
+    public void startCounter(View view) {
         Intent intent = new Intent(this, CounterService.class);
-        intent.putExtra("KEY1", "StartCounting");
+        EditText editText = (EditText) findViewById(R.id.personName);
+        String message = editText.getText().toString();
+        intent.putExtra("userName", message);
+
         this.startService(intent);
     }
 
-    public void Stopcounter(View view){
+    public void stopCounter(View view){
         Intent intent = new Intent(this, CounterService.class);
         this.stopService(intent);
     }
@@ -73,7 +76,6 @@ public class UserActivity extends AppCompatActivity {
     protected void onDestroy(){
         unregisterReceiver(broadcast);
         db.close();
-
         super.onDestroy();
     }
 

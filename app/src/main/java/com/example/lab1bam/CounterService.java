@@ -15,6 +15,7 @@ public class CounterService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isRunning = true;
+        String userName = intent.getStringExtra("userName");
         Thread thread = new Thread(() -> {
             try {
                 int counter = 0;
@@ -25,13 +26,10 @@ public class CounterService extends Service {
                 }
                 Intent intent2 = new Intent();
                 intent2.setAction("notification.counter");
-                intent2.putExtra("Name", "Rafal");
+                intent2.putExtra("Name", userName);
                 intent2.putExtra("CounterValue", counter);
                 sendBroadcast(intent2);
-
-
             }catch(Exception e){
-
             }
         });
         thread.start();

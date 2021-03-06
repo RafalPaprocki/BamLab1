@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lab1bam">
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +8,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab1BAM">
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.provider.lab1bam"
+            android:readPermission="android.permission.permRead"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="true"></provider>
+
         <service
             android:name=".CounterService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".UserActivity"
@@ -28,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
