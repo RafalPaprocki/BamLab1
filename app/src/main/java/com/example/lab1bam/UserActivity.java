@@ -48,26 +48,22 @@ public class UserActivity extends AppCompatActivity {
     public void StartCounter(View view) {
         Intent intent = new Intent(this, CounterService.class);
         intent.putExtra("KEY1", "StartCounting");
-
         this.startService(intent);
     }
 
     public void Stopcounter(View view){
         Intent intent = new Intent(this, CounterService.class);
-        intent.putExtra("KEY1", "StartCounting");
         this.stopService(intent);
     }
 
     public void getCounters(View view){
         Thread thread = new Thread(() -> {
             try {
-
                 List<Counter> users = userDao.getAll();
                 for (Counter user : users){
                     Log.d("Database read", "Name: " + user.name + " Counter: " + user.count);
                 }
             }catch(Exception e){
-
             }
         });
         thread.start();

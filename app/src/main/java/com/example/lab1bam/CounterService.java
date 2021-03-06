@@ -20,7 +20,7 @@ public class CounterService extends Service {
                 int counter = 0;
                 while (isRunning == true) {
                     counter++;
-                    Log.d("CounterSerivce", "Count: " + Integer.toString(counter));
+                    Log.d("CounterService", "Count: " + Integer.toString(counter));
                     Thread.sleep(1000);
                 }
                 Intent intent2 = new Intent();
